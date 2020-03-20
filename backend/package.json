@@ -9,6 +9,8 @@
   "author": "Owen Bartolf",
   "license": "ISC",
   "dependencies": {
+    "mongoose": "^5.9.5",
     "restify": "^8.5.1"
-  }
+  },
+  "type": "module"
 }
