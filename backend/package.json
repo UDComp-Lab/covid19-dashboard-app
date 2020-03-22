@@ -1,0 +1,14 @@
+{
+  "name": "covid-dashboard-backend",
+  "version": "0.0.1",
+  "description": "A backend REST API for the COVID19 dashboard app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Owen Bartolf",
+  "license": "ISC",
+  "dependencies": {
+    "restify": "^8.5.1"
+  }
+}
