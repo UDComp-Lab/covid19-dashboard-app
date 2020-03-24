@@ -1,5 +1,6 @@
 const Restify = require('restify');
 const Mongoose = require('mongoose');
+const os = require('os');
 
 const FeaturedArticle = require('./lib/ODM/FeaturedArticle');
 
@@ -7,6 +8,32 @@ const MONGO_DB_URL = "mongodb+srv://dbUser:mAEwW8cyR88sszp7@testenv-b7bnp.azure.
 const PORT = 8080;
 
 let restServer = Restify.createServer();
+
+// Use body parser middleware.
+restServer.use(Restify.plugins.bodyParser({
+    maxBodySize: 0,
+    mapParams: true,
+    mapFiles: false,
+    overrideParams: false,
+    multipartHandler: function(part) {
+        part.on('data', function(data) {
+          // do something with the multipart data
+        });
+    },
+   multipartFileHandler: function(part) {
+        part.on('data', function(data) {
+          // do something with the multipart file data
+        });
+    },
+    keepExtensions: false,
+    uploadDir: os.tmpdir(),
+    multiples: true,
+    hash: 'sha1',
+    rejectUnknown: true,
+    requestBodyOnGet: false,
+    reviver: undefined,
+    maxFieldsSize: 2 * 1024 * 1024
+ }));
 
 // Begins the intialization chain.
 function InitializeEverything()
@@ -21,7 +48,8 @@ function MongoInitialization()
     Mongoose.connect(
         MONGO_DB_URL,
         {
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         }
     );
     
