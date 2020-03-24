@@ -14,6 +14,6 @@ let userSchema = new mongoose.Schema(
         timestamps: true
     }
 );
-let userModel = mongoose.model("LocalSource", localSourceSchema);
+let userModel = mongoose.model("User", userSchema);
 
 module.exports = userModel;

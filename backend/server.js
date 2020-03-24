@@ -2,12 +2,13 @@ const Restify = require('restify');
 const Mongoose = require('mongoose');
 const os = require('os');
 
-const FeaturedArticle = require('./lib/ODM/FeaturedArticle');
+const Routes = require('./routes/routes');
 
 const MONGO_DB_URL = "mongodb+srv://dbUser:mAEwW8cyR88sszp7@testenv-b7bnp.azure.mongodb.net/test?retryWrites=true&w=majority";
 const PORT = 8080;
 
 let restServer = Restify.createServer();
+Routes(restServer);
 
 // Use body parser middleware.
 restServer.use(Restify.plugins.bodyParser({
