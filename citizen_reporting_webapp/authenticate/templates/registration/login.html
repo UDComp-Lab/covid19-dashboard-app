@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        {% if form.errors %}
+        <p>Theres something wrong with what you entered.</p>
+        {% endif %}
+
+        {% if next %}
+        <p> Hey you can't access that page </p>
+        {% endif %}
+
+        <form class="" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+
+            <p>Username: {{form.username}} </p>
+            <p>Password: {{form.password}} </p>
+
+            <p><input type="submit" = value="login"></p>
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+        <form class="" action="{% url 'register' %}" method="get">
+            {% csrf_token %}
+            <p><input type="submit" value="Create Account"></p>
+        </form>
+
+        <form  action="{% url 'index' %}" method="get">
+            {% csrf_token %}
+            <p><input type="submit" value="Back to Dashboard"></p>
+        </form>
+
+    </body>
+</html>

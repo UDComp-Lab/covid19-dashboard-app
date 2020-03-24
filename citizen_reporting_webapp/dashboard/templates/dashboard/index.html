@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Citizen Reporting Dashboard</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body>
+
+    <div id='map' width="100%" style='height:400px'></div>
+    <nav id="menu"></nav>
+    <form class="" action="{% url 'login' %}" method="get">
+        {% csrf_token %}
+        <!-- <button type="submit">login</button> -->
+        <input type="submit" name="" value="login">
+    </form>
+
+    <style>
+    #menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+    </style>
+    <script>
+    mapboxgl.accessToken = "pk.eyJ1IjoidmFydW52OSIsImEiOiJjazd4eG5ueXkwMTh6M2VvNWZ4em92YWRtIn0.byw-Ds5JRgGlNJpUOFMQ4A";
+    console.log(mapboxgl.accessToken)
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v9',
+        // style: 'mapbox://styles/varunv9/ck80nztpf1tqs1iowxyy5lh5o',
+        // style: 'mapbox://styles/varunv9/ck82igz1v0xi51il30af3khz2',
+        center: [-117.1611, 32.7157],
+        zoom: 9
+    });
+
+
+    // MARK : - Load data
+    // Number of Confirmed cases by city
+    map.on('load', function() {
+        map.addLayer({
+            id: 'time_series_19-covid-Confirme-0pw55o',
+            type: 'circle',
+            source: {
+                type: 'vector',
+                url: 'mapbox://varunv9.6jfb8uhz'
+            },
+            'source-layer': 'time_series_19-covid-Confirme-0pw55o',
+            paint: {
+                'circle-radius': ["step",["zoom"],
+                ["interpolate",["linear"],
+                ["get", "3/9/20"],0,2,100,5,5000,10,20000,20],
+                2,["interpolate",["linear"],["get", "3/9/20"],0,2,10,5,50,10,100,20],
+                3.5,["interpolate",["linear"],["get", "3/9/20"],0,5,10,15,50,25,100,30],
+                5,["interpolate",["linear"],["get", "3/9/20"],0,10,10,5,50,10,100,20]],
+                'circle-opacity': 0.6,
+                'circle-color': '#fd2121'
+
+            }
+        });
+    });
+
+    // User Submitted Assets by Location
+    map.on('load', function() {
+        map.addLayer({
+            id: 'generated_user_data_100',
+            type: 'circle',
+            source: {
+                type: 'vector',
+                url: 'mapbox://varunv9.ck80wdnav006r2trys0az1vf6-0tntr'
+            },
+            'source-layer': 'generated_user_data_100',
+            paint: {
+                'circle-radius': 3,
+                'circle-opacity': 0.6,
+                'circle-color': 'rgb(128,0,128)'
+            }
+        });
+    });
+
+    // MARK : - Toggle functionality
+    var toggleableLayerIds = [{'source-layer': 'time_series_19-covid-Confirme-0pw55o', 'label':'Confirmed Cases'},
+    {'source-layer': 'generated_user_data_100', 'label':'User Submitted Data'}];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var source_id = toggleableLayerIds[i]['source-layer'];
+        var label = toggleableLayerIds[i]['label'];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = label;
+        link.source_id = source_id
+
+        link.onclick = function(e) {
+            var clickedLayer = this.source_id;
+            e.preventDefault();
+            e.stopPropagation();
+
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                this.className = '';
+            } else {
+                this.className = 'active';
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+    </script>
+</body>
+</html>
