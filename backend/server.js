@@ -1,10 +1,12 @@
-import Restify from 'restify';
-import Mongoose from 'mongoose';
+const Restify = require('restify');
+const Mongoose = require('mongoose');
+
+const FeaturedArticle = require('./lib/ODM/FeaturedArticle');
 
 const MONGO_DB_URL = "mongodb+srv://dbUser:mAEwW8cyR88sszp7@testenv-b7bnp.azure.mongodb.net/test?retryWrites=true&w=majority";
 const PORT = 8080;
 
-let server = Restify.createServer();
+let restServer = Restify.createServer();
 
 // Begins the intialization chain.
 function InitializeEverything()
@@ -17,7 +19,7 @@ function MongoInitialization()
 {
     console.log("Connecting to database...");
     Mongoose.connect(
-        "mongodb://localhost/test",
+        MONGO_DB_URL,
         {
             useNewUrlParser: true
         }
@@ -37,10 +39,10 @@ function MongoInitialization()
 // Initialize Restify server and routes
 function RestifyInitialization()
 {
-    server.listen(8080, 
+    restServer.listen(8080, 
         function()
         {
-            console.log("%s listening at %s.", server.name, server.url);
+            console.log("%s listening at %s.", restServer.name, restServer.url);
             server();
         }
     );
@@ -49,5 +51,7 @@ function RestifyInitialization()
 // Main entry logic.
 function server()
 {
-    console.log("Server running on port ");
+    console.log("Server running on port " + PORT.toString());
 }
+
+InitializeEverything();

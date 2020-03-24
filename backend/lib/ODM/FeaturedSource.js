@@ -1,13 +1,14 @@
 /*
-    FeaturedSource.mjs
+    FeaturedSource.js
 */
 
 
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 let featuredSourceSchema = new mongoose.Schema(
     {
-        
+        name: String,
+        articles: [FeaturedArticle]
     },
     {
         timestamps: true
@@ -15,4 +16,4 @@ let featuredSourceSchema = new mongoose.Schema(
 );
 let featuredSourceModel= mongoose.model("FeaturedSource", featuredSourceSchema);
 
-export default featuredSourceModel;
+module.exports = featuredSourceModel;
