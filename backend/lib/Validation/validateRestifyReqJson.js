@@ -15,7 +15,7 @@ module.exports = function(restifyReq, requiredFieldTypePairs)
     }
 
     // Check if body has every value
-    for (const [key, requiredType] of Object.entries(requiredFields))
+    for (const [key, requiredType] of Object.entries(requiredFieldTypePairs))
     {
 
         if (
