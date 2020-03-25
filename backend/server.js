@@ -35,6 +35,9 @@ restServer.use(Restify.plugins.bodyParser({
     reviver: undefined,
     maxFieldsSize: 2 * 1024 * 1024
  }));
+ 
+ // Also use query parser.
+ restServer.use(Restify.plugins.queryParser());
 
 // Begins the intialization chain.
 function InitializeEverything()
