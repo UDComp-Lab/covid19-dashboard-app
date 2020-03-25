@@ -7,9 +7,19 @@ module.exports = async function(req, res, next)
         !validateRestifyReqJson(
             req,
             {
+                // Base info
                 "username" : "string",
-                "dateOfBirth" : "number",
-                "sex" : "string"
+                "birthYear" : "number",
+                "bioSex" : "string",
+                "ethnicity" : "string",
+                "occupation" : "string",
+                
+                // Medical history
+                "historyWithCancer" : "boolean",
+                "hasDiabetes" : "boolean",
+                "hasHeartDiseaseOrHypertension" : "boolean",
+                "medicationsAffectImmuneSystem" : "boolean",
+                "smokingHistory" : "boolean"
             }
         )
     )

@@ -29,10 +29,7 @@ module.exports = async function(req, res, next)
                 res.json(
                     {
                         "success" : true,
-
-                        "username" : resource.username,
-                        "birthday" : resource.birthday,
-                        "sex" : resource.sex
+                        "user" : resource.toObject()
                     }
                 );
 
