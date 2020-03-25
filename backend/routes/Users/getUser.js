@@ -12,8 +12,8 @@ module.exports = async function(req, res, next)
         res.status(422); // 422 for unprocessable.
         res.json(
             {
-                "success" : false,
-                "error" : "Invalid arguments."
+                success : false,
+                error : "Invalid arguments."
             }
         );
         
@@ -28,8 +28,8 @@ module.exports = async function(req, res, next)
                 res.status(200);
                 res.json(
                     {
-                        "success" : true,
-                        "user" : resource.toObject()
+                        success : true,
+                        resource : resource.toObject()
                     }
                 );
 
@@ -40,8 +40,8 @@ module.exports = async function(req, res, next)
                 res.status(404);
                 res.json(
                     {
-                        "success" : false,
-                        "error" : "No such user."
+                        success : false,
+                        error : "No such user."
                     }
                 );
 
@@ -52,8 +52,8 @@ module.exports = async function(req, res, next)
                 res.status(500);
                 res.json(
                     {
-                        "success" : false,
-                        "error" : "DB error."
+                        success : false,
+                        error : "DB error."
                     }
                 );
 

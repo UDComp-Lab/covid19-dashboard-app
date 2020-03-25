@@ -27,8 +27,8 @@ module.exports = async function(req, res, next)
         res.status(422); // 422 for unprocessable.
         res.json(
             {
-                "success" : false,
-                "error" : "Invalid arguments."
+                success : false,
+                error : "Invalid arguments."
             }
         );
         
@@ -42,7 +42,7 @@ module.exports = async function(req, res, next)
 
     await User.find( 
         { 
-            "username" : req.body.username
+            username : req.body.username
         } 
     )
     .then(
@@ -71,8 +71,8 @@ module.exports = async function(req, res, next)
         res.status(errorStatus); // 500 for server error.
         res.json(
             {
-                "success" : success,
-                "error" : errorMsg
+                success : success,
+                error : errorMsg
             }
         );
         
@@ -83,8 +83,18 @@ module.exports = async function(req, res, next)
     let newUser = new User(
         {
             username: req.body.username,
-            dateOfBirth: new Date(req.body.dateOfBirth),
-            sex: req.body.sex
+            birthYear: req.body.birthYear,
+            bioSex: req.body.bioSex,
+            ethnicity: req.body.ethnicity,
+            occupation: req.body.occupation,
+
+            historyWithCancer: req.body.historyWithCancer,
+            hasDiabetes: req.body.hasDiabetes,
+            hasHeartDiseaseOrHypertension: req.body.hasHeartDiseaseOrHypertension,
+            medicationsAffectImmuneSystem: req.body.medicationsAffectImmuneSystem,
+            smokingHistory: req.body.smokingHistory,
+
+            subjectiveSymptomsResponse: []
         }
     )
 
@@ -96,7 +106,7 @@ module.exports = async function(req, res, next)
             res.status(200);
             res.json(
                 {
-                    "success" : true
+                    success : true
                 }
             );
         }
@@ -109,8 +119,8 @@ module.exports = async function(req, res, next)
             res.status(500); // 500 for DB error
             res.json(
                 {
-                    "success" : false,
-                    "error" : "Db error."
+                    success : false,
+                    error : "Db error."
                 }
             );
             

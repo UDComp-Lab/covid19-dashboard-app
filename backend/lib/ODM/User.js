@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const CovidQuestionResponse = require('./Questions/CovidQuestionResponse');
+const SubjectiveQuestionResponse = require('./Questions/SubjectiveQuestionResponse');
+
 let userSchema = new mongoose.Schema(
     {
         username: {
@@ -69,13 +72,17 @@ let userSchema = new mongoose.Schema(
             default: false
         },
 
+        // COVID Question response
+        hasCovidResponse: {
+            type: CovidQuestionResponse,
+            required: false
+        },
+
         // Subjective symptoms
-        subjectiveSymptoms: {
-            type: [Object],
-            default: {}
+        subjectiveSymptomsResponse: {
+            type: [SubjectiveQuestionResponse],
+            default: []
         }
-
-
 
     },
     {
